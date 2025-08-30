@@ -221,6 +221,9 @@ async def get_all_axioms(
         list[str]: List of all axiom strings
     """
     api = _get_api_instance(owl_file_path)
+    if isinstance(limit, str):
+        # Handle case where limit comes as string from MCP protocol
+        limit = int(limit) if limit else 100
     return api.get_all_axiom_strings(
         include_labels=include_labels, annotation_property=annotation_property
     )[0:limit]
